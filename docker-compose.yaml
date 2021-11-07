@@ -1,0 +1,104 @@
+version: '3.6'
+
+services:
+  auth_web:
+    build: ./auth/
+    restart: always
+    command: uwsgi --http :8000 --module app.wsgi --workers 1 --threads 1
+    volumes:
+      - ./auth/src:/srv:delegated
+    env_file:
+      - ./auth/src/app/.env
+    links:
+      - auth_db
+    ports:
+      - 8081:8000
+    depends_on:
+      - auth_db
+
+  auth_db:
+    image: postgres
+    env_file:
+      - ./auth/src/app/.env
+    volumes:
+      - database-data-authn:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+  tracker_web:
+    build: ./tracker/
+    restart: always
+    command: uwsgi --http :8000 --module app.wsgi --workers 1 --threads 1
+    volumes:
+      - ./tracker/src:/srv:delegated
+    env_file:
+      - ./tracker/src/app/.env
+    links:
+      - tracker_db
+    ports:
+      - 8082:8000
+    depends_on:
+      - tracker_db
+
+  tracker_db:
+    image: postgres
+    env_file:
+      - ./tracker/src/app/.env
+    volumes:
+      - database-data-tracker:/var/lib/postgresql/data/
+    ports:
+      - 5433:5432
+
+  accounting_web:
+    build: ./accounting/
+    restart: always
+    command: uwsgi --http :8000 --module app.wsgi --workers 1 --threads 1
+    volumes:
+      - ./accounting/src:/srv:delegated
+    env_file:
+      - ./accounting/src/app/.env
+    links:
+      - database
+    ports:
+      - 8083:8000
+    depends_on:
+      - accounting_db
+
+  accounting_db:
+    image: postgres
+    env_file:
+      - ./accounting/src/app/.env
+    volumes:
+      - database-data-accounting:/var/lib/postgresql/data/
+    ports:
+      - 5434:5432
+
+  analytics_web:
+    build: ./analytics/
+    restart: always
+    command: uwsgi --http :8000 --module app.wsgi --workers 1 --threads 1
+    volumes:
+      - ./analytics/src:/srv:delegated
+    env_file:
+      - ./analytics/src/app/.env
+    links:
+      - analytics_db
+    ports:
+      - 8084:8000
+    depends_on:
+      - analytics_db
+
+  analytics_db:
+    image: postgres
+    env_file:
+      - ./analytics/src/app/.env
+    volumes:
+      - database-data-analytics:/var/lib/postgresql/data/
+    ports:
+      - 5435:5432
+
+volumes:
+  database-data-authn:
+  database-data-tracker:
+  database-data-accounting:
+  database-data-analytics:
