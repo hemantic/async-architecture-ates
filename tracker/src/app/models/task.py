@@ -5,10 +5,17 @@ from django.db import models
 
 class TasksQuerySet(models.QuerySet):
     def filter_active(self):
+        """Фильтрует активные задачи
+
+        Метод возвращает только активные на текущий момент задачи
+        """
         return self.filter(status=Task.Status.ACTIVE)
 
 
 class Task(models.Model):
+    """
+    Модель задачи
+    """
     class Status(models.TextChoices):
         ACTIVE = "active", "Активна"
         CLOSED = "closed", "Закрыта"
@@ -54,4 +61,8 @@ class Task(models.Model):
         return self.title
 
     def close(self):
+        """Закрывает задачу
+
+        Метод выставляет задаче статус "закрыта"
+        """
         self.status = self.Status.CLOSED

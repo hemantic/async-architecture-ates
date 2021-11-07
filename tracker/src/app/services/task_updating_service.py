@@ -11,10 +11,17 @@ class TaskUpdatingService:
 
     @staticmethod
     def execute_update(task, update):
+        """Обновляет задачу
+
+        Метод обновляет задачу, вызывая соответствующией действия над моделью
+        """
         task = Task(index=task.id, **update)
         task.save()
         return task
 
     @staticmethod
     def emit_events(task):
-        pass
+        """Отравляет события по обновленной задаче
+
+        Метод отправляет необходимые CUD и BE события по обновленной задаче
+        """

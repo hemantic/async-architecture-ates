@@ -1,7 +1,10 @@
 from app.models import Task
 
 
-class TaskUpdatingService:
+class TaskCreatingService:
+    """
+    Сервис обновления задачи
+    """
     def __init__(self):
         pass
 
@@ -12,8 +15,15 @@ class TaskUpdatingService:
 
     @staticmethod
     def execute_create(task_data):
+        """Записывает задачу в БД
+
+        Метод производит запись задачи в БД, вызываю соответсвующий метод модели
+        """
         return Task.objects.craeate(**task_data)
 
     @staticmethod
     def emit_events(task):
-        pass
+        """Отравляет события по созданной задаче
+
+        Метод отправляет необходимые CUD и BE события по созданной задаче
+        """

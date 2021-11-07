@@ -1,6 +1,5 @@
 from app.conf.environ import env
 
-
 AUTH_USER_MODEL = 'app.User'
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
