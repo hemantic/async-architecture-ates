@@ -1,3 +1,6 @@
+from app.conf.environ import env
+
+
 AUTH_USER_MODEL = 'app.User'
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
@@ -7,8 +10,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.RemoteUserBackend',
 ]
 
-SOCIAL_AUTH_ATES_KEY = 'wn5RijgTbAFpQQl7eA0CiSZIjqvHWpxSKsPIBG7w'
-SOCIAL_AUTH_ATES_SECRET = '1HFhsJzftz3BRWcG5LRbbnepRjThomq73tb0i60EHDBkSZff7swITHq1jz0nSJuwWo1Vqj50ykKFGSIa0jSsYkqDexKXHBAfIwzdGgDgYulDA7lgloyNEJ4VvhAqUaqV'
+SOCIAL_AUTH_ATES_KEY = env('SOCIAL_AUTH_ATES_KEY', cast=str, default='')
+SOCIAL_AUTH_ATES_SECRET = env('SOCIAL_AUTH_ATES_SECRET', cast=str, default='')
 
 LOGIN_URL = '/auth/login/oauth-baseoauth2/'
 
