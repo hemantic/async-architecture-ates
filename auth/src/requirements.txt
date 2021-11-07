@@ -7,3 +7,5 @@ uuid==1.30
 datetime==4.3
 psycopg2-binary==2.9.1
 django-crispy-forms==1.13.0
+django-oauth-toolkit==1.5.0
+django-cors-headers==3.10.0
