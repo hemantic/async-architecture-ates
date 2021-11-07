@@ -9,6 +9,11 @@ urlpatterns += [
     path('', views.index, name='index'),
 ]
 
+# Auth
+urlpatterns += [
+    path('', include('social_django.urls', namespace='social'))
+]
+
 # Django admin
 urlpatterns += [
     path('admin/', admin.site.urls),
