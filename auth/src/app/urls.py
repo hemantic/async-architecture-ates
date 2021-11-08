@@ -7,6 +7,7 @@ urlpatterns = []
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('profile/', views.profile, name='profile'),
 ]
 
 # Django admin
@@ -17,4 +18,9 @@ urlpatterns += [
 # Django healthchecks
 urlpatterns += [
     path('api/v1/healthchecks/', include('django_healthchecks.urls')),
+]
+
+# oAuth
+urlpatterns += [
+    path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]
